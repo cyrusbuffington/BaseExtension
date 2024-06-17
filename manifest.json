@@ -2,24 +2,12 @@
     "manifest_version": 3,
     "name": "Base",
     "version": "1.0",
-    "description": "A collaborate canvas for Chrome users",
-    "icons": {
-      "16": "assets/icon16.png",
-      "48": "assets/icon48.png",
-      "128": "assets/icon120.png"
+    "description": "A collaborative canvas for Chrome users",
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "assets/icon120.png"
     },
     "permissions": [
-      "activeTab",
-      "https://www.reddit.com/r/place/*"
-    ],
-    "content_scripts": [
-      {
-        "matches": ["https://www.reddit.com/r/place/*"],
-        "js": ["contentScript.js"]
-      }
-    ],
-    "browser_action": {
-      "default_icon": "icon16.png",
-      "default_popup": "popup.html"
-    }
+      "storage"
+    ]
   }
