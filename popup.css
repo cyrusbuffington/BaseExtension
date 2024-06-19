@@ -1,10 +1,33 @@
 body, html {
     margin: 0;
     padding: 0;
-    overflow: hidden;
 }
 
 canvas {
     display: block;
     border: none;
+    overflow: hidden;
+    transition: transform 0.1s ease-in-out;
+    image-rendering: pixelated;
+    position: absolute;
+    height: 500px;
+    width: 500px;
+
+}
+
+#container, #canvas-container{
+    overflow: hidden;
+    height: 500px;
+    width: 500px;
+}
+
+#outlineCanvas {
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+}
+
+#outlineCanvas:not(.hide) {
+    opacity: 1;
+    transition-delay: .2s;
 }
