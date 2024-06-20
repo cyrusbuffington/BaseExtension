@@ -158,6 +158,11 @@ class Canvas {
 
         this.startX = event.clientX;
         this.startY = event.clientY;
+        
+        if (this.isDragging) {
+            document.body.style.cursor = "grabbing";
+        }
+
     }
 
     onMouseMove(event) {
@@ -181,6 +186,8 @@ class Canvas {
         setTimeout(() => {
             this.placeEnabled = true;
         }, 0);
+        
+        document.body.style.cursor = "default";
         
     }
     updateCanvasPosition() {
