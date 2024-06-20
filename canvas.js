@@ -28,6 +28,13 @@ class Canvas {
         this.fillCanvasWithColor("#FFFFFF");
         this.saveData();
 
+        this.canvas.style.position = 'absolute';
+        this.canvas.style.top = '0px';
+        this.canvas.style.left = '0px';
+        this.outlineCanvas.style.position = 'absolute';
+        this.outlineCanvas.style.top = '0px';
+        this.outlineCanvas.style.left = '0px';
+
     }
 
     initializeOutline() {
@@ -43,6 +50,8 @@ class Canvas {
         }
 
         this.outlineCanvas.classList.add('hide');
+
+        
     }
 
     saveData() {
@@ -144,13 +153,11 @@ class Canvas {
         
     }
 
-
-
-
     onMouseDown(event) {
         this.isDragging = true;
-        this.startX = event.clientX - this.offsetX;
-        this.startY = event.clientY - this.offsetY;
+
+        this.startX = event.clientX;
+        this.startY = event.clientY;
     }
 
     onMouseMove(event) {
@@ -163,6 +170,8 @@ class Canvas {
 
         this.offsetX = event.clientX - this.startX;
         this.offsetY = event.clientY - this.startY;
+        this.startX = event.clientX;
+        this.startY = event.clientY;
 
         this.updateCanvasPosition();
     }
@@ -172,26 +181,29 @@ class Canvas {
         setTimeout(() => {
             this.placeEnabled = true;
         }, 0);
-
-        let rect = this.canvas.getBoundingClientRect();
-        console.log(rect.top, rect.left);
         
     }
     updateCanvasPosition() {
-        let rect = this.canvas.getBoundingClientRect();
 
-        if (rect.top > -1500 && rect.top < 0) {
-            this.canvas.style.top = `${this.offsetY}px`;
-            this.outlineCanvas.style.top = `${this.offsetY}px`;
-        }
-        
-        if (rect.left > -1500 && rect.left < 0) {
-            this.canvas.style.left = `${this.offsetX}px`;
-            this.outlineCanvas.style.left = `${this.offsetX}px`;
-        }
-        
+        this.moveCanvasByOffset(this.offsetX, this.offsetY);
+
+    }
+
+    moveCanvasByOffset(offsetX, offsetY) {
+        // Get the current position
+        let currentX = parseInt(this.canvas.style.left, 10);
+        let currentY = parseInt(this.canvas.style.top, 10);
+
+        // Calculate the new position
+        let newX = currentX + offsetX;
+        let newY = currentY + offsetY;
 
 
+        // Update the position
+        this.canvas.style.left = `${newX}px`;
+        this.outlineCanvas.style.left = `${newX}px`;
+        this.canvas.style.top = `${newY}px`;
+        this.outlineCanvas.style.top = `${newY}px`;
     }
 
 }
