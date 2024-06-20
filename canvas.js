@@ -132,6 +132,7 @@ class Canvas {
 
         event.preventDefault();
         let coordinates = this.calculateRealCoordinates(event);
+        console.log(coordinates);
 
         if (this.zoom > 1) {
             this.placeEnabled = false;
@@ -143,6 +144,8 @@ class Canvas {
 
             this.canvas.style.transform = `scale(${this.zoom})`;
             this.outlineCanvas.style.transform = `scale(${this.zoom})`;
+
+            //this.readjustCanvasPositionAfterZoom(coordinates.x, coordinates.y);
         }
         if (this.zoom != 4){
             this.outlineCanvas.classList.add('hide');
@@ -205,14 +208,34 @@ class Canvas {
 
         let rect = this.canvas.getBoundingClientRect();
 
-        let newX = rect.left + offsetX <= 0 && rect.left + offsetX >= -1500 ? currentX + offsetX : currentX;
-        
-        let newY = rect.top + offsetY <= 0 && rect.top + offsetY >= -1500 ? currentY + offsetY : currentY;
+        let lowerBound =  (this.n * this.length - this.zoom * this.n * this.length);
 
+        let newX = rect.left + offsetX <= 0 && rect.left + offsetX >= lowerBound ? currentX + offsetX : currentX;
         
-        console.log(offsetX, offsetY);
+        let newY = rect.top + offsetY <= 0 && rect.top + offsetY >= lowerBound ? currentY + offsetY : currentY;
 
         // Update the position
+        this.canvas.style.left = `${newX}px`;
+        this.outlineCanvas.style.left = `${newX}px`;
+        this.canvas.style.top = `${newY}px`;
+        this.outlineCanvas.style.top = `${newY}px`;
+    }
+
+    readjustCanvasPositionAfterZoom(originX, originY) {
+        let currentX = parseInt(this.canvas.style.left, 10);
+        let currentY = parseInt(this.canvas.style.top, 10);
+
+        let rect = this.canvas.getBoundingClientRect();
+
+        let offsetX = rect.left - initialX;
+        let offsetY = rect.top - initialY;
+
+
+        let lowerBound =  (this.n * this.length - this.zoom * this.n * this.length);
+
+        let newX = rect.left <= 0 && rect.left >= lowerBound ? currentX : currentX - offsetX;
+        let newY = rect.top <= 0 && rect.top >= lowerBound ? currentY : currentY - offsetY;
+
         this.canvas.style.left = `${newX}px`;
         this.outlineCanvas.style.left = `${newX}px`;
         this.canvas.style.top = `${newY}px`;
