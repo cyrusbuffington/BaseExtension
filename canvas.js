@@ -5,7 +5,7 @@ class Canvas {
         this.zoom = 1;
         this.n = n;
         this.length = length;
-        this.canvasData = null; //This will be loaded in from server
+        this.canvasData = null; 
         this.placeEnabled= true;
 
         this.outlineCanvas = document.getElementById('outlineCanvas');
@@ -16,19 +16,6 @@ class Canvas {
         this.startY = 0;
         this.offsetX = 0;
         this.offsetY = 0;
-
-        // Bind the event handlers to 'this'
-        this.onMouseDown = this.onMouseDown.bind(this);
-        this.onMouseMove = this.onMouseMove.bind(this);
-        this.onMouseUp = this.onMouseUp.bind(this);
-
-        // Add the event listeners
-        this.canvas.addEventListener('mousedown', this.onMouseDown);
-        this.canvas.addEventListener('mousemove', this.onMouseMove);
-        this.canvas.addEventListener('mouseup', this.onMouseUp);
-        
-
-
     }
 
     initializeCanvas() {
@@ -68,18 +55,21 @@ class Canvas {
         this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
 
-    drawPixel(event, color) {
+    drawPixel(event, color, hover = false) {
         if (this.placeEnabled) {
             this.ctx.fillStyle = color;
             let coordinates = this.calculatePixelCoordinates(event);
             this.ctx.fillRect(coordinates.x, coordinates.y, this.n, this.n);
+        }
+        if (!hover && this.placeEnabled) {
+            this.saveData();
         }
     }
 
     hoverPixel(event) {
         this.ctx.putImageData(this.canvasData, 0, 0);
         this.ctx.globalCompositeOperation = 'multiply'; // Set the composite operation to 'multiply'
-        this.drawPixel(event, "rgba(0, 0, 0, 0.5)"); // Fill the pixel with a semi-transparent black color
+        this.drawPixel(event, "rgba(0, 0, 0, 0.5)", true); // Fill the pixel with a semi-transparent black color
         this.ctx.globalCompositeOperation = 'source-over'; // Reset the composite operation to 'source-over'
 
     }
@@ -164,7 +154,9 @@ class Canvas {
         if (!this.isDragging) return;
         
         this.placeEnabled = false;
+
         if (this.zoom == 1) return;
+
 
         this.offsetX = event.clientX - this.startX;
         this.offsetY = event.clientY - this.startY;
@@ -176,7 +168,7 @@ class Canvas {
         this.isDragging = false;
         setTimeout(() => {
             this.placeEnabled = true;
-        }, 100);
+        }, 1);
         
     }
     updateCanvasPosition() {

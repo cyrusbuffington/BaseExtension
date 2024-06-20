@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     board.canvas.addEventListener('click', (event) => {
         board.drawPixel(event, "#FF0000");
-        board.saveData();
 
     });
     board.canvas.addEventListener('mousemove', (event) => {
@@ -21,5 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
             board.zoomOut(event);
         }
     });
+
+
+    board.canvas.addEventListener('mousedown', (event) => {
+        board.onMouseDown(event);
+    });
+
+    board.canvas.addEventListener('mousemove', (event) => {
+        board.onMouseMove(event);
+    });
+
+    board.canvas.addEventListener('mouseup', (event) => {
+        board.onMouseUp(event);
+    });     
 });
 
