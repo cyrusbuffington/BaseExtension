@@ -144,6 +144,9 @@ class Canvas {
         
     }
 
+
+
+
     onMouseDown(event) {
         this.isDragging = true;
         this.startX = event.clientX - this.offsetX;
@@ -157,6 +160,7 @@ class Canvas {
 
         if (this.zoom == 1) return;
 
+
         this.offsetX = event.clientX - this.startX;
         this.offsetY = event.clientY - this.startY;
 
@@ -167,19 +171,27 @@ class Canvas {
         this.isDragging = false;
         setTimeout(() => {
             this.placeEnabled = true;
-        }, );
+        }, 0);
+
+        let rect = this.canvas.getBoundingClientRect();
+        console.log(rect.top, rect.left);
         
     }
     updateCanvasPosition() {
-        this.constrainPan();
-    }
+        let rect = this.canvas.getBoundingClientRect();
 
-    constrainPan() {
-        console.log(this.canvas.style.top, this.canvas.style.left);
-        this.canvas.style.top = `${this.offsetY}px`;
-        this.canvas.style.left = `${this.offsetX}px`;
-        this.outlineCanvas.style.top = `${this.offsetY}px`;
-        this.outlineCanvas.style.left = `${this.offsetX}px`;
+        if (rect.top > -1500 && rect.top < 0) {
+            this.canvas.style.top = `${this.offsetY}px`;
+            this.outlineCanvas.style.top = `${this.offsetY}px`;
+        }
+        
+        if (rect.left > -1500 && rect.left < 0) {
+            this.canvas.style.left = `${this.offsetX}px`;
+            this.outlineCanvas.style.left = `${this.offsetX}px`;
+        }
+        
+
+
     }
 
 }
