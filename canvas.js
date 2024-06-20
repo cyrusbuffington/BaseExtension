@@ -132,7 +132,7 @@ class Canvas {
 
         event.preventDefault();
         let coordinates = this.calculateRealCoordinates(event);
-        console.log(coordinates);
+        //console.log(coordinates);
 
         if (this.zoom > 1) {
             this.placeEnabled = false;
@@ -144,12 +144,18 @@ class Canvas {
 
             this.canvas.style.transform = `scale(${this.zoom})`;
             this.outlineCanvas.style.transform = `scale(${this.zoom})`;
-
-            //this.readjustCanvasPositionAfterZoom(coordinates.x, coordinates.y);
         }
         if (this.zoom != 4){
             this.outlineCanvas.classList.add('hide');
         }
+        if (this.zoom == 1) {
+            this.revertCanvasPosition();
+        }
+        else if (this.zoom == 2) {
+            //FIXME: This is a hacky solution to the problem of the canvas not being centered after zooming out
+
+        }
+
         setTimeout(() => {
             this.placeEnabled = true;
         }, 100);
@@ -241,6 +247,14 @@ class Canvas {
         this.canvas.style.top = `${newY}px`;
         this.outlineCanvas.style.top = `${newY}px`;
     }
+
+    revertCanvasPosition() {
+        this.canvas.style.left = '0px';
+        this.canvas.style.top = '0px';
+        this.outlineCanvas.style.left = '0px';
+        this.outlineCanvas.style.top = '0px';
+    }
+
 
 }
 
