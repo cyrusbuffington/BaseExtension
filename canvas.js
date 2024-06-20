@@ -42,10 +42,10 @@ class Canvas {
         this.outlineCanvas.width = this.n * this.length;
         this.outlineCtx.clearRect(0, 0, this.outlineCanvas.width, this.outlineCanvas.height);
         this.outlineCtx.fillStyle = "#000000";
-        for (let i = 0; i < this.canvas.width; i += this.n) {
+        for (let i = 0; i <= this.canvas.width; i += this.n) {
             this.outlineCtx.fillRect(i, 0, 1 / this.zoom, this.canvas.height);
         }
-        for (let i = 0; i < this.canvas.height; i += this.n) {
+        for (let i = 0; i <= this.canvas.height; i += this.n) {
             this.outlineCtx.fillRect(0, i, this.canvas.width, 1 / this.zoom);
         }
 
@@ -202,9 +202,15 @@ class Canvas {
         let currentY = parseInt(this.canvas.style.top, 10);
 
         // Calculate the new position
-        let newX = currentX + offsetX;
-        let newY = currentY + offsetY;
 
+        let rect = this.canvas.getBoundingClientRect();
+
+        let newX = rect.left + offsetX <= 0 && rect.left + offsetX >= -1500 ? currentX + offsetX : currentX;
+        
+        let newY = rect.top + offsetY <= 0 && rect.top + offsetY >= -1500 ? currentY + offsetY : currentY;
+
+        
+        console.log(offsetX, offsetY);
 
         // Update the position
         this.canvas.style.left = `${newX}px`;
