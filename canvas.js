@@ -43,10 +43,10 @@ class Canvas {
         this.outlineCtx.clearRect(0, 0, this.outlineCanvas.width, this.outlineCanvas.height);
         this.outlineCtx.fillStyle = "#000000";
         for (let i = 0; i <= this.canvas.width; i += this.n) {
-            this.outlineCtx.fillRect(i, 0, 1 / this.zoom, this.canvas.height);
+            this.outlineCtx.fillRect(i, 0, 1, this.canvas.height);
         }
         for (let i = 0; i <= this.canvas.height; i += this.n) {
-            this.outlineCtx.fillRect(0, i, this.canvas.width, 1 / this.zoom);
+            this.outlineCtx.fillRect(0, i, this.canvas.width, 1);
         }
 
         this.outlineCanvas.classList.add('hide');
@@ -116,9 +116,11 @@ class Canvas {
 
             this.canvas.style.transform = `scale(${this.zoom})`;
             this.outlineCanvas.style.transform = `scale(${this.zoom})`;
+
+            this.revertCanvasPosition();
         }
 
-        if (this.zoom == 4){
+        if (this.zoom >= 2){
             this.outlineCanvas.classList.remove('hide');
         }
         setTimeout(() => {
@@ -131,8 +133,8 @@ class Canvas {
     zoomOut(event) {
 
         event.preventDefault();
+
         let coordinates = this.calculateRealCoordinates(event);
-        //console.log(coordinates);
 
         if (this.zoom > 1) {
             this.placeEnabled = false;
@@ -144,16 +146,11 @@ class Canvas {
 
             this.canvas.style.transform = `scale(${this.zoom})`;
             this.outlineCanvas.style.transform = `scale(${this.zoom})`;
-        }
-        if (this.zoom != 4){
-            this.outlineCanvas.classList.add('hide');
-        }
-        if (this.zoom == 1) {
+
             this.revertCanvasPosition();
         }
-        else if (this.zoom == 2) {
-            //FIXME: This is a hacky solution to the problem of the canvas not being centered after zooming out
-
+        if (this.zoom < 2){
+            this.outlineCanvas.classList.add('hide');
         }
 
         setTimeout(() => {
@@ -200,9 +197,7 @@ class Canvas {
         
     }
     updateCanvasPosition() {
-
         this.moveCanvasByOffset(this.offsetX, this.offsetY);
-
     }
 
     moveCanvasByOffset(offsetX, offsetY) {
@@ -210,7 +205,7 @@ class Canvas {
         let currentX = parseInt(this.canvas.style.left, 10);
         let currentY = parseInt(this.canvas.style.top, 10);
 
-        // Calculate the new position
+        //Calculate the new position with bounds checking
 
         let rect = this.canvas.getBoundingClientRect();
 
@@ -227,35 +222,12 @@ class Canvas {
         this.outlineCanvas.style.top = `${newY}px`;
     }
 
-    readjustCanvasPositionAfterZoom(originX, originY) {
-        let currentX = parseInt(this.canvas.style.left, 10);
-        let currentY = parseInt(this.canvas.style.top, 10);
-
-        let rect = this.canvas.getBoundingClientRect();
-
-        let offsetX = rect.left - initialX;
-        let offsetY = rect.top - initialY;
-
-
-        let lowerBound =  (this.n * this.length - this.zoom * this.n * this.length);
-
-        let newX = rect.left <= 0 && rect.left >= lowerBound ? currentX : currentX - offsetX;
-        let newY = rect.top <= 0 && rect.top >= lowerBound ? currentY : currentY - offsetY;
-
-        this.canvas.style.left = `${newX}px`;
-        this.outlineCanvas.style.left = `${newX}px`;
-        this.canvas.style.top = `${newY}px`;
-        this.outlineCanvas.style.top = `${newY}px`;
-    }
-
     revertCanvasPosition() {
         this.canvas.style.left = '0px';
         this.canvas.style.top = '0px';
         this.outlineCanvas.style.left = '0px';
         this.outlineCanvas.style.top = '0px';
     }
-
-
 }
 
 export { Canvas };
