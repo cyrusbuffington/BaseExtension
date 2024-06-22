@@ -16,6 +16,8 @@ class Canvas {
         this.startY = 0;
         this.offsetX = 0;
         this.offsetY = 0;
+
+        this.color = "#000000";
     }
 
     initializeCanvas() {
@@ -64,7 +66,7 @@ class Canvas {
         this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
 
-    drawPixel(event, color, hover = false) {
+    drawPixel(event, color = this.color, hover = false) {
         if (this.placeEnabled) {
             this.ctx.fillStyle = color;
             let coordinates = this.calculatePixelCoordinates(event);
@@ -229,6 +231,8 @@ class Canvas {
         this.outlineCanvas.style.top = '0px';
     }
 }
+
+
 
 export { Canvas };
 
