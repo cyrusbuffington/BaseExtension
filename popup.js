@@ -1,12 +1,12 @@
 import {Canvas} from './canvas.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    initializePallet();
+    initializePallete();
     let board = new Canvas(10, 50); // n = pixel size, length = canvas dimensions in terms of pixels
     board.initializeCanvas();
     board.initializeOutline();
 
-    let pallet = document.getElementById('pallet');
+    let pallete = document.getElementById('pallete');
     let canvas = board.canvas;
     let currentColor = document.getElementById('current-color');
     currentColor.style.backgroundColor = board.color;
@@ -40,15 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
         board.onMouseUp(event);
     });     
 
-    pallet.addEventListener('click', (event) => {
+    pallete.addEventListener('click', (event) => {
         board.color = event.target.style.backgroundColor;
         currentColor.style.backgroundColor = board.color;
     });
 });
 
 
-function initializePallet() {
-    let pallet = document.getElementById('pallet');
+function initializePallete() {
+    let pallete = document.getElementById('pallete');
     let colors = 
                  [
                   "#6d001a","#be0039", "#ff4500","#ffa800","#ffd635","#fff8b8","#00a368","#00cc78",
@@ -61,7 +61,7 @@ function initializePallet() {
         let col = document.createElement('div');
         col.id = 'color';
         col.style.backgroundColor = color;
-        pallet.appendChild(col);
+        pallete.appendChild(col);
     });
 }
 
