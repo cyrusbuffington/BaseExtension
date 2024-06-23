@@ -103,10 +103,11 @@ class Canvas {
         return {x, y};
     }
 
-    zoomIn(event) {
+    zoomIn(event, centered = false) {
 
         event.preventDefault();
         let coordinates = this.calculateRealCoordinates(event);
+        if (centered) coordinates = {x: this.canvas.width / 2 * this.zoom, y: this.canvas.height / 2 * this.zoom};
 
         if (this.zoom < 4) {
             this.placeEnabled = false;
@@ -132,11 +133,13 @@ class Canvas {
         
     }
 
-    zoomOut(event) {
+    zoomOut(event, centered = false) {
 
         event.preventDefault();
 
         let coordinates = this.calculateRealCoordinates(event);
+
+        if (centered) coordinates = {x: this.canvas.width / 2 * this.zoom, y: this.canvas.height / 2 * this.zoom};
 
         if (this.zoom > 1) {
             this.placeEnabled = false;

@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentColor = document.getElementById('current-color');
     currentColor.style.backgroundColor = board.color;
 
+    let plus = document.getElementById('plus');
+    let minus = document.getElementById('minus');
+
     canvas.addEventListener('click', (event) => {
         board.drawPixel(event);
 
@@ -44,6 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
         board.color = event.target.style.backgroundColor;
         currentColor.style.backgroundColor = board.color;
     });
+    plus.addEventListener('click', (event) => {
+        board.zoomIn(event, true);
+    });
+    minus.addEventListener('click', (event) => {
+        board.zoomOut(event, true);
+    });
+
 });
 
 

@@ -71,8 +71,15 @@ canvas {
     margin: 1px;
 }
 
-p {
+
+#plus, #minus {
+    color: white;
+    font-size: 30px;
+    margin: 5px;
     font-family: 'Pixelify Sans', sans-serif;
-    font-size: 20px;
-    color: #fff;
+    display: inline-block;
+}
+
+#zoom-buttons {
+    display: flex;
 }
