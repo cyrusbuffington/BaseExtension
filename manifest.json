@@ -4,10 +4,13 @@
     "version": "1.0",
     "description": "A collaborative canvas for Chrome users",
     "action": {
-      "default_popup": "popup.html",
-      "default_icon": "assets/icon120.png"
+      "default_popup": "app/popup.html",
+      "default_icon": "app/assets/icon120.png"
     },
     "permissions": [
       "storage"
-    ]
-  }
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'; connect-src *;"
+    }
+}
