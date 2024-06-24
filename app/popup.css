@@ -64,6 +64,7 @@ canvas {
     padding: 0px;
     vertical-align: middle;
     box-sizing: border-box;
+    cursor: pointer;
 }
 #current-color {
     width: 40px;
@@ -78,6 +79,7 @@ canvas {
     margin: 5px;
     font-family: 'Pixelify Sans', sans-serif;
     display: inline-block;
+    cursor: pointer;
 }
 
 #zoom-buttons {
