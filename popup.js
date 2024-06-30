@@ -3,12 +3,19 @@ import {Canvas} from './canvas.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    
 
+    
     initializePallete();
     let board = new Canvas(10, 50); // n = pixel size, length = canvas dimensions in terms of pixels
     board.initializeCanvas();
     board.initializeOutline();
+    
+    // Load data from storage
+    chrome.storage.sync.get(['canvasData'], (data) => {
+        if (data) {
+            console.log(data);
+        }
+    });
 
     let canvasElement = document.getElementById('canvas');
 

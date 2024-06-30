@@ -65,6 +65,8 @@ class Canvas {
 
     saveData() {
         this.canvasData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        //Set chrome storage
+        chrome.storage.sync.set({canvasData: this.canvasData});
     }
 
     loadData(data) {
