@@ -11,11 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     board.initializeOutline();
     
     // Load data from storage
-    chrome.storage.sync.get(['canvasData'], (data) => {
-        if (data) {
-            console.log(data);
-        }
-    });
+    
 
     let canvasElement = document.getElementById('canvas');
 
