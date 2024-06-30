@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Base</title>
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/coloris.css"/>
+
+  <script defer src="canvas.js" type="module"></script>
+  <script defer src="popup.js" type ="module"></script>
+  <script defer src="lib/coloris.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div id="canvas-container">
+        <canvas id="canvas"></canvas>
+        <canvas id="outlineCanvas"></canvas>
+    </div>
+    <div id="dashboard">
+      <div id="current-color"></div>
+      <div id="pallete"></div>
+
+      <div id="draw"><img src="assets/brush-fill.svg"></div>
+      <div id="bucket"><img src="assets/paint-bucket.svg"></div>
+
+      <div id="zoom-buttons">
+        <div id="plus"><img src="assets/zoom-in.svg"></div>
+        <div id="minus"><img src="assets/zoom-out.svg"></div>
+      </div>
+
+      <div id="pan"><img src="assets/arrows-move.svg"></div>
+
+  
+
+    </div>
+  </div>
+</body>
+</html>
