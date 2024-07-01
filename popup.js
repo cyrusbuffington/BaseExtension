@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let prev = document.getElementById('prev');
     let next = document.getElementById('next');
+    let clear = document.getElementById('clear');
 
     canvasElement.addEventListener('mouseleave', () => {
         board.ctx.putImageData(board.canvasData, 0, 0);
@@ -121,6 +122,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     next.addEventListener('click', () => {
         board.loadNextState();
+    });
+
+    clear.addEventListener('click', () => {
+        board.clearCanvas();
     });
     
 

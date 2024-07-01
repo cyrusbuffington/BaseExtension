@@ -35,7 +35,7 @@ class Canvas {
         if (canvasData) {
             this.ctx.putImageData(canvasData, 0, 0);
         } else {
-            this.fillCanvasWithColor("#ffffff");
+            this.fillCanvasWithColor();
         }
 
         this.saveData();
@@ -100,9 +100,15 @@ class Canvas {
 
 
 
-    fillCanvasWithColor(color) {
+    fillCanvasWithColor(color="#ffffff") {
         this.ctx.fillStyle = color;
         this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    }
+
+    clearCanvas() {
+        this.fillCanvasWithColor();
+        this.saveData();
+        this.saveState();
     }
 
     drawPixel(event, color = this.color, hover = false) {

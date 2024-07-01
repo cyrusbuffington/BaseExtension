@@ -74,11 +74,11 @@ canvas {
 }
 
 
-#plus, #minus, #pan, #draw, #bucket, #next, #prev {
+#plus, #minus, #pan, #draw, #bucket, #next, #prev, #clear {
     color: white;
     font-size: 30px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
     font-family: 'Pixelify Sans', sans-serif;
     display: inline-block;
     cursor: pointer;
