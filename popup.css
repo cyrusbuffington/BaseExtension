@@ -74,7 +74,7 @@ canvas {
 }
 
 
-#plus, #minus, #pan, #draw, #bucket {
+#plus, #minus, #pan, #draw, #bucket, #next, #prev {
     color: white;
     font-size: 30px;
     margin-left: 5px;

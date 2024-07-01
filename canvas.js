@@ -20,6 +20,9 @@ class Canvas {
         this.color = "#000000";
 
         this.mode = 0; // 0 = draw, 1 = pan, 2 = zoom in, 3 = zoom out, 4 = fill
+
+        this.states = [];
+        this.currentState = -1;
     }
 
     initializeCanvas(canvasData = null) {
@@ -36,6 +39,7 @@ class Canvas {
         }
 
         this.saveData();
+        this.saveState();
 
         this.canvas.style.position = 'absolute';
         this.canvas.style.top = '0px';
@@ -50,7 +54,7 @@ class Canvas {
         this.outlineCanvas.height = this.n * this.length;
         this.outlineCanvas.width = this.n * this.length;
         this.outlineCtx.clearRect(0, 0, this.outlineCanvas.width, this.outlineCanvas.height);
-        this.outlineCtx.fillStyle = "#000000";
+        this.outlineCtx.fillStyle = "#808080"; 
         for (let i = 0; i <= this.canvas.width; i += this.n) {
             this.outlineCtx.fillRect(i, 0, 1, this.canvas.height);
         }
@@ -65,14 +69,35 @@ class Canvas {
 
     saveData() {
         this.canvasData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-        //Set chrome storage
+    }
+
+    saveState() {
+        this.states.splice(this.currentState + 1, 1, this.canvasData);
+        this.currentState++;
         
     }
 
     loadData(data) {
         this.ctx.putImageData(data, 0, 0);
-        this.saveData();
+        this.canvasData = data;
     }
+
+    loadPreviousState() {
+        if (this.currentState > 0) {
+            this.currentState--;
+            this.loadData(this.states[this.currentState]);
+        }
+        console.log(this.currentState);
+    }
+
+    loadNextState() {
+        if (this.currentState < this.states.length - 1) {
+            this.currentState++;
+            this.loadData(this.states[this.currentState]);
+        }
+        console.log(this.currentState);
+    }
+
 
 
     fillCanvasWithColor(color) {
@@ -81,12 +106,13 @@ class Canvas {
     }
 
     drawPixel(event, color = this.color, hover = false) {
+        let coordinates = this.calculatePixelCoordinates(event);
+        let initialColor = this.getPixelColor(coordinates.x, coordinates.y);
         if (this.placeEnabled && (this.isDragging || hover)) {
             this.ctx.fillStyle = color;
-            let coordinates = this.calculatePixelCoordinates(event);
             this.ctx.fillRect(coordinates.x, coordinates.y, this.n, this.n);
         }
-        if (!hover && this.placeEnabled) {
+        if (!hover && this.placeEnabled && initialColor != this.getPixelColor(coordinates.x, coordinates.y)) {
             this.saveData();
         }
     }
@@ -292,6 +318,7 @@ class Canvas {
             stack.push({x: x, y: y - this.n});
         }
         this.saveData();
+        this.saveState();
     }
 
 

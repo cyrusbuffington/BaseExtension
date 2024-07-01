@@ -29,13 +29,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let bucket = document.getElementById('bucket');
     let draw = document.getElementById('draw');
 
+    let prev = document.getElementById('prev');
+    let next = document.getElementById('next');
+
     canvasElement.addEventListener('mouseleave', () => {
         board.ctx.putImageData(board.canvasData, 0, 0);
     });
 
     canvas.addEventListener('click', (event) => {
-        if (board.mode == 0) board.drawPixel(event);
-        else if (board.mode == 2) board.zoomIn(event);
+        //if (board.mode == 0) board.drawPixel(event);
+        if (board.mode == 2) board.zoomIn(event);
         else if (board.mode == 3) board.zoomOut(event);
         else if (board.mode == 4) board.fill(event);
     });
@@ -72,7 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     canvas.addEventListener('mouseup', (event) => {
-        if (board.mode == 0) board.isDragging = false;
+        if (board.mode == 0) {
+            board.isDragging = false;
+            board.saveState();
+        }
         else if (board.mode == 1) board.onMouseUp(event);
     });     
 
@@ -107,6 +113,14 @@ document.addEventListener('DOMContentLoaded', () => {
     draw.addEventListener('click', () => {
         board.mode = 0;
         canvasElement.style.cursor = "default";
+    });
+
+    prev.addEventListener('click', () => {
+        board.loadPreviousState();
+    });
+
+    next.addEventListener('click', () => {
+        board.loadNextState();
     });
     
 
