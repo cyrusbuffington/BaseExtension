@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let prev = document.getElementById('prev');
     let next = document.getElementById('next');
     let clear = document.getElementById('clear');
+    let download = document.getElementById('download');
 
     canvasElement.addEventListener('mouseleave', () => {
         board.ctx.putImageData(board.canvasData, 0, 0);
@@ -127,6 +128,15 @@ document.addEventListener('DOMContentLoaded', () => {
     clear.addEventListener('click', () => {
         board.clearCanvas();
     });
+
+    download.addEventListener('click', () => {
+        
+        let link = document.createElement('a');
+        link.download ='drawing.png';
+        link.href = board.canvas.toDataURL();
+        link.click();
+    });
+
     
 
 }); 
