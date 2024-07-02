@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+
     canvas.addEventListener('mousedown', (event) => {
         if (board.mode == 0) {
             board.isDragging = true;
@@ -137,8 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
         link.click();
     });
 
+    window.addEventListener('beforeunload', () => {
+        board.saveCanvasData();
+    });
     
-
 }); 
 
 

@@ -32,14 +32,19 @@ class Canvas {
         this.canvas.height = this.n * this.length;
         this.canvas.width = this.n * this.length;
 
-        if (canvasData) {
-            this.ctx.putImageData(canvasData, 0, 0);
-        } else {
-            this.fillCanvasWithColor();
+        this.fillCanvasWithColor();
+
+        let data = this.fetchCanvasData();
+        if (data) {
+            this.loadData(data);
         }
+        
 
         this.saveData();
         this.saveState();
+
+
+
 
         this.canvas.style.position = 'absolute';
         this.canvas.style.top = '0px';
@@ -65,6 +70,16 @@ class Canvas {
         this.outlineCanvas.classList.add('hide');
 
         
+
+    }
+
+    saveCanvasData() {
+
+    }
+
+    fetchCanvasData() {
+
+    
     }
 
     saveData() {
