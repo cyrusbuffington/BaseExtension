@@ -221,7 +221,7 @@ class Canvas {
             this.revertCanvasPosition();
         }
 
-        if (this.zoom >= 2){
+        if (this.zoom >= 4){
             this.outlineCanvas.classList.remove('hide');
         }
         setTimeout(() => {
@@ -250,7 +250,7 @@ class Canvas {
 
             this.revertCanvasPosition();
         }
-        if (this.zoom < 2){
+        if (this.zoom < 4){
             this.outlineCanvas.classList.add('hide');
         }
 

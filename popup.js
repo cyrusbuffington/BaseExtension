@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     canvas.addEventListener('mousemove', (event) => {
-        if (board.mode == 0) board.hoverPixel(event);
+        if (board.mode == 0 ) board.hoverPixel(event);
     });
 
 
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     bucket.addEventListener('click', () => {
         board.mode = 4;
-        canvasElement.style.cursor = "url('assets/cursor.cur') 10 10, auto";
+        canvasElement.style.cursor = "default";
     });
 
     draw.addEventListener('click', () => {

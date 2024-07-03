@@ -5,7 +5,7 @@
     "description": "An intuitive pixel art editor for quick and easy pixel art creations.",
     "action": {
       "default_popup": "popup.html",
-      "default_icon": "assets/icon120.png"
+      "default_icon": "assets/120.png"
     },
     "permissions": [
       "unlimitedStorage",
