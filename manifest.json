@@ -1,13 +1,14 @@
 {
     "manifest_version": 3,
-    "name": "Base",
+    "name": "Pixel Studio",
     "version": "1.0",
-    "description": "A collaborative canvas for Chrome users",
+    "description": "An intuitive pixel art editor for quick and easy pixel art creations.",
     "action": {
       "default_popup": "popup.html",
       "default_icon": "assets/icon120.png"
     },
     "permissions": [
+      "unlimitedStorage",
       "storage"
     ]
 }

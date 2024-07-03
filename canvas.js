@@ -23,6 +23,7 @@ class Canvas {
 
         this.states = [];
         this.currentState = -1;
+        this.changesMade = 0;
     }
 
     initializeCanvas(canvasData = null) {
@@ -34,18 +35,15 @@ class Canvas {
 
         this.fillCanvasWithColor();
 
-        let data = this.fetchCanvasData();
-        if (data) {
-            this.loadData(data);
-        }
-        
+        this.loadFromChromeStorage().then(() => {
+            this.saveData();
+            this.saveState();;
+        });
 
         this.saveData();
         this.saveState();
 
-
-
-
+        
         this.canvas.style.position = 'absolute';
         this.canvas.style.top = '0px';
         this.canvas.style.left = '0px';
@@ -73,14 +71,41 @@ class Canvas {
 
     }
 
-    saveCanvasData() {
-
+    saveToChromeStorage() {
+        const pixelArray = Array.from(this.canvasData.data);
+        const imageDataToSave = {
+            data: pixelArray,
+            width: this.canvasData.width,
+            height: this.canvasData.height,
+            colorSpace: this.canvasData.colorSpace
+        };
+        const serializedImageData = JSON.stringify(imageDataToSave);
+        chrome.storage.local.set({['canvasData']: serializedImageData}, () => {
+            console.log('ImageData saved');
+        });
     }
 
-    fetchCanvasData() {
-
-    
+    fetchFromChromeStorage() {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get(['canvasData'], (result) => {
+                if (result['canvasData']) {
+                    const imageDataObject = JSON.parse(result['canvasData']);
+                    const pixelData = new Uint8ClampedArray(imageDataObject.data);
+                    const imageData = new ImageData(pixelData, imageDataObject.width, imageDataObject.height);
+                    console.log('ImageData fetched');
+                    resolve(imageData);
+                } else {
+                    console.log('No ImageData found');
+                }
+            });
+        });
     }
+
+    async loadFromChromeStorage() {
+        const imageData = await this.fetchFromChromeStorage();
+        this.loadData(imageData);
+    }
+
 
     saveData() {
         this.canvasData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
@@ -89,7 +114,13 @@ class Canvas {
     saveState() {
         this.states.splice(this.currentState + 1, 1, this.canvasData);
         this.currentState++;
-        
+
+        this.changesMade++;
+        if (this.changesMade > 3) {
+            this.saveToChromeStorage();
+            this.changesMade = 0;
+        }
+
     }
 
     loadData(data) {
@@ -102,7 +133,7 @@ class Canvas {
             this.currentState--;
             this.loadData(this.states[this.currentState]);
         }
-        console.log(this.currentState);
+        this.saveToChromeStorage();
     }
 
     loadNextState() {
@@ -110,9 +141,8 @@ class Canvas {
             this.currentState++;
             this.loadData(this.states[this.currentState]);
         }
-        console.log(this.currentState);
+        this.saveToChromeStorage();
     }
-
 
 
     fillCanvasWithColor(color="#ffffff") {
@@ -124,6 +154,7 @@ class Canvas {
         this.fillCanvasWithColor();
         this.saveData();
         this.saveState();
+        this.saveToChromeStorage();
     }
 
     drawPixel(event, color = this.color, hover = false) {

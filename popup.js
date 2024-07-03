@@ -2,9 +2,9 @@ import {Canvas} from './canvas.js';
 
 
 
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    
     initializePallete();
     let board = new Canvas(10, 50); // n = pixel size, length = canvas dimensions in terms of pixels
     board.initializeCanvas();
@@ -105,12 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     pan.addEventListener('click', () => {
         board.mode = 1;
-        canvasElement.style.cursor = "grab";
+        canvasElement.style.cursor = "move";
     });
 
     bucket.addEventListener('click', () => {
         board.mode = 4;
-        canvasElement.style.cursor = "pointer";
+        canvasElement.style.cursor = "url('assets/cursor.cur') 10 10, auto";
     });
 
     draw.addEventListener('click', () => {
@@ -138,9 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         link.click();
     });
 
-    window.addEventListener('beforeunload', () => {
-        board.saveCanvasData();
-    });
     
 }); 
 
