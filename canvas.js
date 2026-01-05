@@ -96,6 +96,7 @@ class Canvas {
                     resolve(imageData);
                 } else {
                     console.log('No ImageData found');
+                    resolve(null);
                 }
             });
         });
@@ -103,7 +104,9 @@ class Canvas {
 
     async loadFromChromeStorage() {
         const imageData = await this.fetchFromChromeStorage();
-        this.loadData(imageData);
+        if (imageData) {
+            this.loadData(imageData);
+        }
     }
 
 

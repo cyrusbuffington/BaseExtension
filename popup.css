@@ -90,3 +90,8 @@ canvas {
     display: flex;
 }
 
+.control.active {
+    background-color: #555;
+    border-radius: 3px;
+}
+

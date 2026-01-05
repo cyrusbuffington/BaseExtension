@@ -29,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let bucket = document.getElementById('bucket');
     let draw = document.getElementById('draw');
 
+    const toolButtons = [draw, bucket, pan];
+    function setActiveTool(activeButton) {
+        toolButtons.forEach(btn => btn.classList.remove('active'));
+        activeButton.classList.add('active');
+    }
+    setActiveTool(draw); // Draw is default active tool
+
     let prev = document.getElementById('prev');
     let next = document.getElementById('next');
     let clear = document.getElementById('clear');
@@ -106,16 +113,19 @@ document.addEventListener('DOMContentLoaded', () => {
     pan.addEventListener('click', () => {
         board.mode = 1;
         canvasElement.style.cursor = "move";
+        setActiveTool(pan);
     });
 
     bucket.addEventListener('click', () => {
         board.mode = 4;
         canvasElement.style.cursor = "default";
+        setActiveTool(bucket);
     });
 
     draw.addEventListener('click', () => {
         board.mode = 0;
         canvasElement.style.cursor = "default";
+        setActiveTool(draw);
     });
 
     prev.addEventListener('click', () => {
